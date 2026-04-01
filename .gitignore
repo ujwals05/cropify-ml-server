@@ -1,0 +1,85 @@
+# ─────────────────────────────
+#  Python
+# ─────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# ─────────────────────────────
+#  Virtual Environment
+# ─────────────────────────────
+venv/
+.env/
+.venv/
+env/
+ENV/
+
+# ─────────────────────────────
+#  Environment Variables
+# ─────────────────────────────
+.env
+.env.*
+*.env
+
+# ─────────────────────────────
+#  Dependency / Build
+# ─────────────────────────────
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# ─────────────────────────────
+#  Logs & Runtime
+# ─────────────────────────────
+*.log
+logs/
+*.pid
+*.seed
+
+# ─────────────────────────────
+#  Database Files
+# ─────────────────────────────
+*.sqlite3
+*.db
+
+# ─────────────────────────────
+#  ML Models / Large Files
+# ─────────────────────────────
+*.pkl
+*.joblib
+*.h5
+*.pt
+*.onnx
+
+# If you want to keep models, comment above and use:
+# !ml/models/*.pkl
+
+# ─────────────────────────────
+#  Testing / Coverage
+# ─────────────────────────────
+.coverage
+htmlcov/
+.pytest_cache/
+
+# ─────────────────────────────
+#  IDE / Editor
+# ─────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ─────────────────────────────
+#  OS Files
+# ─────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ─────────────────────────────
+#  FastAPI / Uvicorn
+# ─────────────────────────────
+*.reload
