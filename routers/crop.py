@@ -21,14 +21,26 @@ class CropInput(BaseModel):
     ph: float = Field(..., ge=0, le=14,
                       description="pH value of soil (0-14)")
     
-
 @router.post("/recommend")
 async def recommend_crop(data: CropInput):
     try:
-        # Fetch weather from backend
+        # 1. Get current weather
         weather = await get_weather_by_coords(data.lat, data.lon)
 
-        # Run ML model (non-blocking)
+        # 2. IMPORTANT FIX: get rainfall separately using city fallback logic
+        from services.weather_service import _get_5day_rainfall
+
+        # We need city name for forecast API
+        city = weather.get("city")
+
+        rainfall_5day = 0.0
+        rainfall_month = 0.0
+
+        if city:
+            rainfall_5day = await _get_5day_rainfall(city)
+            rainfall_month = round((rainfall_5day / 5) * 30, 2)
+
+        # 3. Run ML model
         result = await run_in_threadpool(
             predict_crop,
             nitrogen=data.nitrogen,
@@ -37,12 +49,16 @@ async def recommend_crop(data: CropInput):
             temperature=weather["temperature"],
             humidity=weather["humidity"],
             ph=data.ph,
-            rainfall=weather["rainfall"]
+            rainfall=rainfall_month
         )
 
         return {
             "prediction": result,
-            "weather": weather
+            "weather": {
+                **weather,
+                "rainfall_5day": rainfall_5day,
+                "rainfall_month_estimate": rainfall_month
+            }
         }
 
     except Exception as e:
