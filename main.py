@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import crop, weather
+from routers import crop, weather, soil, irrigation
 
 app = FastAPI(
     title="Cultivai API",
@@ -11,7 +11,7 @@ app = FastAPI(
 # CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173","http://127.0.0.1:5173"],
+    allow_origins=["http://localhost:5173","http://127.0.0.1:5173","http://localhost:5174"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -30,6 +30,8 @@ async def load_models():
 # Routers
 app.include_router(crop.router, prefix="/api/crop", tags=["Crop"])
 app.include_router(weather.router, prefix="/api/weather", tags=["Weather"])
+app.include_router(soil.router, prefix="/api/soil", tags=["Soil"])
+app.include_router(irrigation.router, prefix="/api/irrigation", tags=["Irrigation"])
 
 # Health check
 @app.get("/", tags=["Health"])
