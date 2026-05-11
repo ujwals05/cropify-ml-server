@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import crop, weather, soil, irrigation
+from routers import crop, weather, soil, irrigation, disease
 
 app = FastAPI(
     title="Cultivai API",
@@ -32,6 +32,7 @@ app.include_router(crop.router, prefix="/api/crop", tags=["Crop"])
 app.include_router(weather.router, prefix="/api/weather", tags=["Weather"])
 app.include_router(soil.router, prefix="/api/soil", tags=["Soil"])
 app.include_router(irrigation.router, prefix="/api/irrigation", tags=["Irrigation"])
+app.include_router(disease.router, prefix="/api/disease", tags=["Disease"]) 
 
 # Health check
 @app.get("/", tags=["Health"])
